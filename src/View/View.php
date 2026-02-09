@@ -26,24 +26,32 @@ class View {
     }
 
     public static function push(string $stack, string $content): void {
-        self::$stacks[$stack][] = $content;
+        // Evita empurrar o mesmo conteúdo (como o link de CSS) repetidamente
+        if (!isset(self::$stacks[$stack]) || !in_array($content, self::$stacks[$stack])) {
+            self::$stacks[$stack][] = $content;
+        }
     }
 
     public static function stack(string $stack): void {
         if (isset(self::$stacks[$stack])) {
             echo implode("\n", self::$stacks[$stack]);
+            // Limpa após renderizar para evitar vazamento de memória ou duplicidade
+            unset(self::$stacks[$stack]);
         }
     }
 
     public static function partial(string $path, array $data = []): void {
         extract($data);
         
-        $filePath = __DIR__ . "/../../views/{$path}.php";
+        // Usando o caminho absoluto a partir da raiz do projeto (ajuste o nível conforme necessário)
+        // __DIR__ . /../.. costuma apontar para a pasta src ou raiz.
+        $basePath = realpath(__DIR__ . '/../../views');
+        $filePath = $basePath . DIRECTORY_SEPARATOR . str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path) . '.php';
 
         if (file_exists($filePath)) {
             require $filePath;
         } else {
-            echo "";
+            error_log("Erro: Partial [{$path}] não encontrado em: {$filePath}");
         }
     }
 }

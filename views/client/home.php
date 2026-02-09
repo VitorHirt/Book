@@ -5,10 +5,7 @@
 <?php View::push('css', ''); ?>
 
 <?php View::start('content'); ?>
-    <div class="hero">
-        <h1><?= $titulo ?></h1>
-        <p><?= $descricao ?></p>
-    </div>
+     <?php partial('client/partials/banner'); ?>
 <?php View::end(); ?>
 
 <?php View::push('js', ''); ?>

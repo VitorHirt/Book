@@ -23,21 +23,17 @@
         <!-- Swipper -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
         <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-
-        <?php View::stack('styles'); ?>
     </head>
 
     <body>
-        <?php partial('layouts/partials/sidebar'); ?>
+        <?php partial('layouts/partials/sidebar/sidebar'); ?>
 
-        <div class="container">
+        <div>
             <?php View::yield('content'); ?>
         </div>
 
         <footer class="footer">
             <p>&copy; 2026 - Desenvolvido com PHP Puro</p>
         </footer>
-
-        <?php View::stack('scripts'); ?>
     </body>
 </html>
